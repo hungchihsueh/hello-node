@@ -1,7 +1,7 @@
 console.log("hello World");
 
 function sum(para){
-    total=(1+para)*para/2;
+    let total=(1+para)*para/2;
     // for(i=0; i<para; i++){
     //     total+=i;
     // }
