@@ -1,10 +1,10 @@
 const fs = require("fs");
-const { resolve } = require("./foo.txt");
+
 
 
 function readFilePromise () {
     return new Promise ((resolve,reject)=>{
-        fs.readFile("input.txt", "utf-8", (err,data)=>{
+        fs.readFile("foo.txt", "utf-8", (err,data)=>{
             if(err){
                 reject(err)
             } else {
