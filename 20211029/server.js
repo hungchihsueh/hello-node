@@ -2,13 +2,18 @@ const express = require("express");
 
 let app = express();
 
-app.get("/", (req, res) => {
-    res.send("hello! home here.");
-});
-app.get("/member", (req, res) => {
-    res.send("hello! member here.");
+app.use((req, res, next) => {
+  console.log("hello!");
+  next();
 });
 
-app.listen(8080, () => {
+app.get("/", (req, res) => {
+  res.send("hello! home here.");
+});
+app.get("/member", (req, res) => {
+  res.send("hello! member here.");
+});
+
+app.listen(3006, () => {
   console.log("express app 啟動!!!");
 });
