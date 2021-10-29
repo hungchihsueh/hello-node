@@ -7,6 +7,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  let current = new Date();
+  console.log(`在${current}時有人
+  來訪!!!`);
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("hello! home here.");
 });
