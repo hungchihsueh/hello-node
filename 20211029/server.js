@@ -21,6 +21,12 @@ app.get("/member", (req, res) => {
   res.send("hello! member here.");
 });
 
+app.use((req, res, next) => {
+  console.log("not found");
+  res.status(404).send("fuck you!");
+  next();
+});
+
 app.listen(3006, () => {
   console.log("express app 啟動!!!");
 });
