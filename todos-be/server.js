@@ -31,6 +31,10 @@ app.listen(3006, () => {
 //   next();
 // });
 
+app.get("/", async (req, res) => {
+  res.status(200).send("it's home page!!!");
+})
+  
 app.get("/api/todos", async (req, res) => {
   let data = await connection.queryAsync("SELECT * FROM todos");
   res.json(data);
