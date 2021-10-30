@@ -3,7 +3,12 @@ require("dotenv").config();
 const mysql = require("mysql");
 const Promise = require("bluebird");
 
-let app = express();
+const cors = require("cors");
+let corsOption = {
+  origin: "*",
+};
+
+const app = express();
 
 var connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -33,8 +38,8 @@ app.listen(3006, () => {
 
 app.get("/", async (req, res) => {
   res.status(200).send("it's home page!!!");
-})
-  
+});
+
 app.get("/api/todos", async (req, res) => {
   let data = await connection.queryAsync("SELECT * FROM todos");
   res.json(data);

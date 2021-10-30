@@ -1,10 +1,18 @@
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import EditBtn from "./buttons/EditBtn";
 import ShowBtn from "./buttons/ShowBtn";
 import DeleteBtn from "./buttons/DeleteBtn";
+import axios from "axios";
 
 const TodoList = () => {
+  const [todos, settodos] = useState([{}, {}]);
+  useEffect(async()=>{
+    let res = axios.get("http://localhost:3006/api/todos",
+    ),[]
+
+  })
   return (
     <div className="column is-three-fifths">
       <nav
