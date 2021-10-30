@@ -35,6 +35,10 @@ app.get("/api/todos", async (req, res) => {
   let data = await connection.queryAsync("SELECT * FROM todos");
   res.json(data);
 });
+app.get("/api/members", async (req, res) => {
+  let data = await connection.queryAsync("SELECT * FROM members");
+  res.json(data);
+});
 
 app.use((req, res, next) => {
   console.log("not found");
