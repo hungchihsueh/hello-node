@@ -5,14 +5,17 @@ import EditBtn from "./buttons/EditBtn";
 import ShowBtn from "./buttons/ShowBtn";
 import DeleteBtn from "./buttons/DeleteBtn";
 import axios from "axios";
+import {STATUS,STATUSCOLOR} from "../configs/Status"
 
 const TodoList = () => {
-  const [todos, settodos] = useState([{}, {}]);
-  useEffect(async()=>{
-    let res = axios.get("http://localhost:3006/api/todos",
-    ),[]
+  const [todos, setTodos] = useState([{}, {}, {}]);
+  useEffect(async () => {
+    let res = await axios.get("http://localhost:3006/api/todos");
+    setTodos(res.data);
+  }, []);
+  // console.log(todos);
 
-  })
+  
   return (
     <div className="column is-three-fifths">
       <nav
@@ -32,21 +35,27 @@ const TodoList = () => {
         </div>
       </div>
       TODO: 列表
-      <section className="message">
-        <header className="message-header">
-          <p>TODO: 標題</p>
-        </header>
-        <div className="message-body"></div>
-        <footer className="card-footer">
-          <ShowBtn />
-          <a href="#" className="card-footer-item">
-            <FontAwesomeIcon icon={faCheck} className="mr-2" />
-            Done
-          </a>
-          <EditBtn />
-          <DeleteBtn />
-        </footer>
-      </section>
+      {todos.map((todo) => {
+        return(
+        <section className={`message ${STATUSCOLOR[todo.status]}`} key={todo.id}>
+          <header className="message-header">
+            <p>{STATUS[todo.status]} {todo.title}</p>
+          </header>
+          <div className="message-body">
+          {todo.content}
+          <div>截止時間:{todo.deadline}</div>
+          </div>
+          <footer className="card-footer">
+            <ShowBtn />
+            <a href="#" className="card-footer-item">
+              <FontAwesomeIcon icon={faCheck} className="mr-2" />
+              Done
+            </a>
+            <EditBtn />
+            <DeleteBtn />
+          </footer>
+        </section>
+      )})}
     </div>
   );
 };

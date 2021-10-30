@@ -4,11 +4,10 @@ const mysql = require("mysql");
 const Promise = require("bluebird");
 
 const cors = require("cors");
-let corsOption = {
-  origin: "*",
-};
 
 const app = express();
+
+app.use(cors());
 
 var connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -39,10 +38,22 @@ app.listen(3006, () => {
 app.get("/", async (req, res) => {
   res.status(200).send("it's home page!!!");
 });
-
+//拿全部拿全部todos
 app.get("/api/todos", async (req, res) => {
   let data = await connection.queryAsync("SELECT * FROM todos");
   res.json(data);
+});
+//根據ID拿資料
+app.get("/api/todos/:todoId", async (req, res) => {
+  let id = req.params.todoId;
+  let data = await connection.queryAsync("SELECT * FROM todos WHERE id=?", [
+    id,
+  ]);
+  if (data.length > 0) {
+    res.json(data[0]);
+  } else {
+    res.status(404).send(`沒有id為${id}的資料`);
+  }
 });
 app.get("/api/members", async (req, res) => {
   let data = await connection.queryAsync("SELECT * FROM members");

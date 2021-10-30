@@ -1,24 +1,40 @@
+import { useState, useEffect } from "react";
+import {useParams} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPen, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import EditBtn from "./buttons/EditBtn";
 import DeleteBtn from "./buttons/DeleteBtn";
+import axios from "axios";
+import {STATUS,STATUSCOLOR} from "../configs/Status"
+
 
 const TodoList = () => {
+  const {todoId}=useParams();
+  const [todo, setTodo] = useState({});
+  useEffect(async () => {
+    let res = await axios.get(`http://localhost:3006/api/todos/${todoId}`);
+    setTodo(res.data);
+  }, []);
+if(todo===null){
+  return<>載入中...</>
+}
+
   return (
     <>
       <div className="column is-three-fifths">
-        <article className="panel">
-          <p className="panel-heading">TODO: 標題</p>
+      
+        <article className={`panel ${STATUSCOLOR[todo.status]}`}>
+          <p className="panel-heading">{todo.title}</p>
           <div className="card-image">
             <figure className="image is-4by3">
               <img src="#" alt="Placeholder image" />
             </figure>
           </div>
-          <div className="panel-block">TODO: 內容</div>
+          <div className="panel-block">{todo.content}</div>
           <ul>
-            <li className="panel-block">到期日: TODO: 到期日</li>
-            <li className="panel-block">ＸＸＸ 於 YYYY-MM-DD 建立</li>
-            <li className="panel-block">ＯＯＯ 於 YYYY-MM-DD 更新</li>
+            <li className="panel-block">到期日:{todo.deadline}</li>
+            <li className="panel-block">ＸＸＸ 於 {todo.create_at} 建立</li>
+            <li className="panel-block">ＯＯＯ 於 {todo.updated_at}更新</li>
           </ul>
           <footer className="card-footer">
             <a href="#" className="card-footer-item">
